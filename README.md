@@ -2,6 +2,8 @@
 
 تطبيق ويب شامل لمتابعة وإدارة المشاريع الإنشائية والأعمال
 
+![Login Screen](https://github.com/user-attachments/assets/5f7579d9-969f-4d25-8d59-8967cf466d2d)
+
 ## ✨ المميزات
 
 - 🖥️ **يعمل على سيرفر محلي** - يعمل على جهاز الكمبيوتر الخاص بك
@@ -14,6 +16,17 @@
 - 📈 **لوحة تحكم** - إحصائيات وتقارير شاملة
 - 🌐 **الوصول من الشبكة** - يمكن الوصول للتطبيق من أي جهاز على نفس الشبكة
 - 🔒 **آمن** - نظام مصادقة محمي وتشفير كلمات المرور
+
+## 📸 لقطات الشاشة
+
+### لوحة التحكم
+![Dashboard](https://github.com/user-attachments/assets/fe483cb1-26b5-4b30-bf75-018b45fe6670)
+
+### إدارة المشاريع
+![Projects](https://github.com/user-attachments/assets/46b4a9c6-fe90-4dfe-b9be-db9a1a5c1136)
+
+### إدارة المهام
+![Tasks](https://github.com/user-attachments/assets/217ef62b-7b37-4d03-8278-2d1d8faa72e4)
 
 ## 📋 المتطلبات
 

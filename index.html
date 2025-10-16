@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استبيان المعرفة والمواقف والممارسات - KAP Survey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>استبيان المعرفة والمواقف والممارسات</h1>
+            <p class="subtitle">KAP Survey - Knowledge, Attitudes, and Practices</p>
+        </header>
+
+        <main>
+            <form id="kapSurvey" class="survey-form">
+                <!-- Knowledge Section -->
+                <section class="survey-section">
+                    <h2>القسم الأول: المعرفة (Knowledge)</h2>
+                    
+                    <div class="question">
+                        <label for="q1">1. ما مدى معرفتك بالموضوع؟</label>
+                        <select id="q1" name="knowledge_level" required>
+                            <option value="">اختر إجابة</option>
+                            <option value="none">لا أعرف شيئاً</option>
+                            <option value="little">معرفة قليلة</option>
+                            <option value="moderate">معرفة متوسطة</option>
+                            <option value="good">معرفة جيدة</option>
+                            <option value="excellent">معرفة ممتازة</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <label>2. هل سمعت عن هذا الموضوع من قبل؟</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="heard_before" value="yes" required>
+                                نعم
+                            </label>
+                            <label>
+                                <input type="radio" name="heard_before" value="no" required>
+                                لا
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Attitudes Section -->
+                <section class="survey-section">
+                    <h2>القسم الثاني: المواقف (Attitudes)</h2>
+                    
+                    <div class="question">
+                        <label for="q3">3. ما رأيك في أهمية هذا الموضوع؟</label>
+                        <select id="q3" name="importance" required>
+                            <option value="">اختر إجابة</option>
+                            <option value="not_important">غير مهم</option>
+                            <option value="slightly_important">مهم قليلاً</option>
+                            <option value="moderately_important">مهم بشكل متوسط</option>
+                            <option value="very_important">مهم جداً</option>
+                            <option value="extremely_important">مهم للغاية</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <label>4. هل أنت مهتم بمعرفة المزيد عن هذا الموضوع؟</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="interested" value="yes" required>
+                                نعم
+                            </label>
+                            <label>
+                                <input type="radio" name="interested" value="no" required>
+                                لا
+                            </label>
+                            <label>
+                                <input type="radio" name="interested" value="maybe" required>
+                                ربما
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Practices Section -->
+                <section class="survey-section">
+                    <h2>القسم الثالث: الممارسات (Practices)</h2>
+                    
+                    <div class="question">
+                        <label for="q5">5. كم مرة تمارس هذا السلوك؟</label>
+                        <select id="q5" name="frequency" required>
+                            <option value="">اختر إجابة</option>
+                            <option value="never">أبداً</option>
+                            <option value="rarely">نادراً</option>
+                            <option value="sometimes">أحياناً</option>
+                            <option value="often">غالباً</option>
+                            <option value="always">دائماً</option>
+                        </select>
+                    </div>
+
+                    <div class="question">
+                        <label for="q6">6. ما هي العوائق التي تمنعك من الممارسة؟</label>
+                        <textarea id="q6" name="barriers" rows="4" placeholder="اكتب إجابتك هنا..."></textarea>
+                    </div>
+                </section>
+
+                <!-- Demographics Section -->
+                <section class="survey-section">
+                    <h2>معلومات عامة</h2>
+                    
+                    <div class="question">
+                        <label for="age">العمر:</label>
+                        <input type="number" id="age" name="age" min="1" max="120">
+                    </div>
+
+                    <div class="question">
+                        <label>الجنس:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="gender" value="male">
+                                ذكر
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="female">
+                                أنثى
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="other">
+                                أخرى
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">إرسال الاستبيان</button>
+                    <button type="reset" class="btn btn-secondary">إعادة تعيين</button>
+                </div>
+            </form>
+
+            <div id="successMessage" class="success-message hidden">
+                <h3>شكراً لك!</h3>
+                <p>تم إرسال إجاباتك بنجاح.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 KAP Survey. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

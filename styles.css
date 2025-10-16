@@ -126,10 +126,9 @@ main {
     height: 18px;
 }
 
-/* Selected radio button styling - using adjacent sibling for better browser support */
+/* Selected radio button styling - more specific selector */
 .radio-group input[type="radio"]:checked + * {
-    background: #667eea;
-    color: white;
+    /* Fallback for older browsers */
 }
 
 .radio-group label:has(input[type="radio"]:checked) {

@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     validationMessage.className = 'validation-message';
     validationMessage.setAttribute('role', 'alert');
     validationMessage.setAttribute('aria-live', 'polite');
+    validationMessage.setAttribute('tabindex', '-1');
     form.insertBefore(validationMessage, form.firstChild);
 
     // Form submission handler

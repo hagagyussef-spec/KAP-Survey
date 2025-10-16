@@ -462,7 +462,8 @@
             </form>
             <div style="margin-top: 20px; text-align: center; color: #666; font-size: 12px;">
                 <p>المستخدم الافتراضي: admin</p>
-                <p>كلمة المرور: admin123</p>
+                <p>كلمة المرور: تم إنشاؤها تلقائياً</p>
+                <p>راجع سجل الخادم للحصول على كلمة المرور</p>
             </div>
         </div>
     </div>
@@ -531,6 +532,7 @@
                 <h2 id="projectModalTitle">إضافة مشروع</h2>
                 <button class="close-modal" onclick="closeProjectModal()">إغلاق</button>
             </div>
+            <div id="projectModalAlert"></div>
             <form id="projectForm">
                 <input type="hidden" id="projectId">
                 <div class="form-group">
@@ -576,6 +578,7 @@
                 <h2 id="taskModalTitle">إضافة مهمة</h2>
                 <button class="close-modal" onclick="closeTaskModal()">إغلاق</button>
             </div>
+            <div id="taskModalAlert"></div>
             <form id="taskForm">
                 <input type="hidden" id="taskId">
                 <div class="form-group">
@@ -631,6 +634,7 @@
                 <h2>إضافة مستخدم</h2>
                 <button class="close-modal" onclick="closeUserModal()">إغلاق</button>
             </div>
+            <div id="userModalAlert"></div>
             <form id="userForm">
                 <div class="form-group">
                     <label>اسم المستخدم *</label>
@@ -1013,10 +1017,10 @@
                     loadDashboard();
                 } else {
                     const error = await response.json();
-                    alert(error.error);
+                    showAlert('projectModalAlert', error.error, 'error');
                 }
             } catch (error) {
-                alert('خطأ في حفظ المشروع');
+                showAlert('projectModalAlert', 'خطأ في حفظ المشروع', 'error');
             }
         });
 
@@ -1030,10 +1034,10 @@
                     loadDashboard();
                 } else {
                     const error = await response.json();
-                    alert(error.error);
+                    console.error('Delete project error:', error.error);
                 }
             } catch (error) {
-                alert('خطأ في حذف المشروع');
+                console.error('Delete project error:', error);
             }
         }
 
@@ -1120,10 +1124,10 @@
                     loadDashboard();
                 } else {
                     const error = await response.json();
-                    alert(error.error);
+                    showAlert('taskModalAlert', error.error, 'error');
                 }
             } catch (error) {
-                alert('خطأ في حفظ المهمة');
+                showAlert('taskModalAlert', 'خطأ في حفظ المهمة', 'error');
             }
         });
 
@@ -1137,10 +1141,10 @@
                     loadDashboard();
                 } else {
                     const error = await response.json();
-                    alert(error.error);
+                    console.error('Delete task error:', error.error);
                 }
             } catch (error) {
-                alert('خطأ في حذف المهمة');
+                console.error('Delete task error:', error);
             }
         }
 
@@ -1175,10 +1179,10 @@
                     loadUsers();
                 } else {
                     const error = await response.json();
-                    alert(error.error);
+                    showAlert('userModalAlert', error.error, 'error');
                 }
             } catch (error) {
-                alert('خطأ في إضافة المستخدم');
+                showAlert('userModalAlert', 'خطأ في إضافة المستخدم', 'error');
             }
         });
 
@@ -1191,10 +1195,10 @@
                     loadUsers();
                 } else {
                     const error = await response.json();
-                    alert(error.error);
+                    console.error('Delete user error:', error.error);
                 }
             } catch (error) {
-                alert('خطأ في حذف المستخدم');
+                console.error('Delete user error:', error);
             }
         }
 

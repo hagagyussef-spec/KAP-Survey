@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const Database = require('better-sqlite3');
 const path = require('path');
 const os = require('os');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -65,9 +66,16 @@ const initDB = () => {
   // Create default admin user if no users exist
   const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get();
   if (userCount.count === 0) {
-    const hashedPassword = bcrypt.hashSync('admin123', 10);
+    // Generate a secure random password
+    const defaultPassword = crypto.randomBytes(8).toString('hex');
+    const hashedPassword = bcrypt.hashSync(defaultPassword, 10);
     db.prepare('INSERT INTO users (username, password, role) VALUES (?, ?, ?)').run('admin', hashedPassword, 'owner');
-    console.log('Default admin user created (username: admin, password: admin123)');
+    console.log('Default admin user created');
+    console.log(`Username: admin`);
+    // Note: Logging password in clear text is necessary for initial setup
+    // The password is randomly generated and should be changed after first login
+    console.log(`Password: ${defaultPassword}`);
+    console.log('⚠️  IMPORTANT: Please change the admin password after first login!');
   }
 };
 
@@ -76,8 +84,15 @@ initDB();
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Generate a secure session secret
+const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
+
+// Session configuration
+// Note: For production use over the internet, set secure: true and use HTTPS
+// For local network use, secure: false is acceptable
 app.use(session({
-  secret: 'kap-survey-secret-key-' + Math.random().toString(36),
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 } // 24 hours
@@ -425,9 +440,17 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('='.repeat(60));
   console.log(`\n📍 الوصول المحلي: http://localhost:${PORT}`);
   console.log(`📍 الوصول من الشبكة: http://${localIP}:${PORT}`);
-  console.log(`\n👤 المستخدم الافتراضي:`);
-  console.log(`   اسم المستخدم: admin`);
-  console.log(`   كلمة المرور: admin123`);
+  console.log(`\n👤 بيانات المستخدم الافتراضي:`);
+  
+  // Check if this is the first run by checking if any users exist with a known password
+  const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get();
+  if (userCount.count === 1) {
+    console.log(`   راجع سجل التشغيل أعلاه للحصول على كلمة المرور المؤقتة`);
+    console.log(`   ⚠️  مهم: قم بتغيير كلمة المرور بعد تسجيل الدخول الأول`);
+  } else {
+    console.log(`   اسم المستخدم: admin`);
+  }
+  
   console.log('\n' + '='.repeat(60));
   console.log('💡 لإيقاف التطبيق اضغط Ctrl+C');
   console.log('='.repeat(60) + '\n');

@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const successMessage = document.getElementById('successMessage');
     const submitButton = form.querySelector('.btn-primary');
 
+    // Create validation message container
+    const validationMessage = document.createElement('div');
+    validationMessage.className = 'validation-message';
+    validationMessage.setAttribute('role', 'alert');
+    validationMessage.setAttribute('aria-live', 'polite');
+    form.insertBefore(validationMessage, form.firstChild);
+
     // Form submission handler
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -53,11 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('reset', function(e) {
         // Clear any error messages
         clearErrors();
-        
-        // Show confirmation
-        if (!confirm('هل أنت متأكد من أنك تريد إعادة تعيين جميع الإجابات؟')) {
-            e.preventDefault();
-        }
+        clearValidationMessage();
     });
 
     // Real-time validation
@@ -72,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function validateForm() {
         let isValid = true;
         clearErrors();
+        clearValidationMessage();
 
         requiredFields.forEach(field => {
             if (!validateField(field)) {
@@ -80,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         if (!isValid) {
-            alert('الرجاء ملء جميع الحقول المطلوبة');
+            showValidationMessage('الرجاء ملء جميع الحقول المطلوبة');
             // Scroll to first error
             const firstError = form.querySelector('.error');
             if (firstError) {
@@ -89,6 +93,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         return isValid;
+    }
+
+    function showValidationMessage(message) {
+        validationMessage.textContent = message;
+        validationMessage.classList.add('show');
+        validationMessage.focus();
+    }
+
+    function clearValidationMessage() {
+        validationMessage.textContent = '';
+        validationMessage.classList.remove('show');
     }
 
     function validateField(field) {
@@ -198,23 +213,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadDraft() {
         try {
             const draft = JSON.parse(localStorage.getItem('kapSurveyDraft'));
-            if (draft) {
-                // Ask user if they want to load the draft
-                if (confirm('تم العثور على مسودة سابقة. هل تريد استعادتها؟')) {
-                    for (let [key, value] of Object.entries(draft)) {
-                        const field = form.elements[key];
-                        if (field) {
-                            if (field.type === 'radio') {
-                                const radio = form.querySelector(`input[name="${key}"][value="${value}"]`);
-                                if (radio) radio.checked = true;
-                            } else {
-                                field.value = value;
-                            }
+            if (draft && Object.keys(draft).length > 0) {
+                // Auto-load draft without confirmation for better UX
+                for (let [key, value] of Object.entries(draft)) {
+                    const field = form.elements[key];
+                    if (field) {
+                        if (field.type === 'radio') {
+                            const radio = form.querySelector(`input[name="${key}"][value="${value}"]`);
+                            if (radio) radio.checked = true;
+                        } else {
+                            field.value = value;
                         }
                     }
-                } else {
-                    // Clear draft
-                    localStorage.removeItem('kapSurveyDraft');
                 }
             }
         } catch (error) {
